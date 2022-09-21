@@ -1,55 +1,30 @@
-/* import { StatusBar } from 'expo-status-bar'
-import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
-import DATA from './Data'
-
-export default function App () {
-  let testData = []
-  for (let i = 0; i < 50; i++) {
-    testData = [...DATA, ...testData]
-  }
-
-  return (
-    <View style={{ marginTop: StatusBar.currentHeigth || 0 + 20 }}>
-      <ScrollView>
-        {testData.map((item, index) => (
-          <Text style={{ fontSize: 20 }} key={index}>
-            {item.fname}
-          </Text>
-        ))}
-      </ScrollView>
-    </View>
-  )
-}
-
-const style = StyleSheet.create({
-  container: {
-    height: 300,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  itemView: {
-    backgroundColor: '#c8c8c8',
-    padding: 10,
-    margin: 5
-  },
-  itemText: {
-    fontSize: 32,
-    margin: 10
-  }
-}) */
-
+import { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { FlatList, ScrollView, StyleSheet, Text, View, Image } from 'react-native'
+import { FlatList, ScrollView, StyleSheet, Text, View, Image, Row } from 'react-native'
 import DATA from './Data'
+import Search from './Search'
 
 export default function App () {
+  const [items, setItems] = useState([])
+
+  useEffect(() => {
+    setItems(DATA)
+  })
+
+  const executeSearch = (search) => {
+    const searchArray = DATA.filter((item) => item.lname.startsWith(search))
+    setItems(searchArray)
+  }
 
   return (
     <ScrollView style={styles.container}>
     <View>
+      <Search executeSearch={executeSearch} />
       <FlatList
-        data={DATA}
-        renderItem={({item})=> <Item person={item}></Item>}
+        data={items}
+        renderItem={({item})=> (
+          <Row person={item} />
+        )}
       />
     </View>
     </ScrollView>
@@ -65,7 +40,7 @@ const Item = ({person}) => {
       </View>
     </View>
   )
-}
+} 
 
 const styles = StyleSheet.create({
   container: {
