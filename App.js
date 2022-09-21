@@ -9,7 +9,7 @@ export default function App () {
 
   useEffect(() => {
     setItems(DATA)
-  })
+  }, [])
 
   const executeSearch = (search) => {
     const searchArray = DATA.filter((item) => item.lname.startsWith(search))
