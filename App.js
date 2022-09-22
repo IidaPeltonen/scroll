@@ -3,9 +3,11 @@ import { StatusBar } from 'expo-status-bar'
 import { FlatList, ScrollView, StyleSheet, Text, View, Image, Row, SafeAreaView } from 'react-native'
 import DATA from './Data'
 import Search from './Search'
+import Item from './Item'
 
 export default function App () {
   const [items, setItems] = useState([])
+  const [selectedId, setSelectedId] = useState(null)
 
   useEffect(() => {
     setItems(DATA)
@@ -16,31 +18,26 @@ export default function App () {
     setItems(searchArray)
   }
 
-  return (
+  const select = (id) => {
+    setSelectedId(id)
+  }
 
-    <View style={styles.container}>
+  return (
+    <SafeAreaView style={styles.container}>
       <Search executeSearch={executeSearch} />
       <FlatList
         data={items}
+        keyExtractor={(item) => item.id}
+        extraData={selectedId}
         renderItem={({item})=> (
-          <Item person={item} />
+          <Item person={item} selectedId={selectedId} select={select} />
         )}
       />
-
-    </View>
+    </SafeAreaView>
   )
 }
 
-const Item = ({person}) => {
-  return(
-    <View>
-      <View>
-        <Text style={styles.itemText}>{person.lname} {person.fname}</Text>
-        <Image style={styles.image} source={{uri: person.img}} />
-      </View>
-    </View>
-  )
-} 
+
 
 const styles = StyleSheet.create({
   container: {
