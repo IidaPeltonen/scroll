@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { FlatList, ScrollView, StyleSheet, Text, View, Image, Row } from 'react-native'
+import { FlatList, ScrollView, StyleSheet, Text, View, Image, Row, SafeAreaView } from 'react-native'
 import DATA from './Data'
 import Search from './Search'
 
@@ -17,17 +17,17 @@ export default function App () {
   }
 
   return (
-    <ScrollView style={styles.container}>
-    <View>
+
+    <View style={styles.container}>
       <Search executeSearch={executeSearch} />
       <FlatList
         data={items}
         renderItem={({item})=> (
-          <Row person={item} />
+          <Item person={item} />
         )}
       />
+
     </View>
-    </ScrollView>
   )
 }
 

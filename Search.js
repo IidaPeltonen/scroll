@@ -20,6 +20,7 @@ export default function Search({executeSearch}) {
 const styles = StyleSheet.create({
     searchbox: {
       marginBottom: 20,
+      marginTop: 25,
       borderColor: '#333',
       borderWidth: 1,
       padding: 5
